@@ -1,0 +1,110 @@
+﻿@model EventBook.Models.IndexViewModel
+@{
+    ViewBag.Title = "Manage";
+}
+
+@*<h2>@ViewBag.Title.</h2>*@
+
+<link href="~/Content/cards.css" rel="stylesheet" />
+<html>
+<head>
+    
+</head>
+<body>
+    <br />
+    <br />
+    <div class="card col-md-12 text-center">
+        <div class="card-header col-md-12">
+            
+            <h1 id="fullname" style="color:Highlight;font-size:25px;" class="col-md-11"></h1>
+            <div class="card-subtitle">
+                <span id="usermail"style="color:darkred;font-size:25px;" class="user-email"></span>&nbsp;
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="card text-center col-md-12">
+        <div class="card-header align-self-center">
+            <ul class="nav nav-tabs card-header-tabs" style="color:darkmagenta; font-size:16px; background-color:gold">
+                <li class="nav-item col-md-3" padding="">
+                    <a class="nav-link active" id="profile-tab" href="#">Profile</a>
+                </li>
+                <li class="nav-item col-md-3">
+                    <a class="nav-link active" id="event-tab" href="#">My events</a>
+                </li>
+                <li class="nav-item col-md-3">
+                    <a class="nav-link active" id="book-tab" href="#">Booked events</a>
+                </li>
+                <li class="nav-item col-md-3">
+                    <a class="nav-link active" id="subs-tab" href="#">subscriptions</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <br/>
+    <div id="edit">
+        <form class="form" padding="10px">
+            <fieldset>
+
+                <div class="form-group">
+                    <label for="UserName" class="col-lg-2 control-label">UserName:</label>
+                    <div class="col-lg-10">
+                        <input type="text" class="form-control" id="fname" placeholder="Enter Email-Id">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="PhoneNumber" class="col-lg-2 control-label">Phone Number:</label>
+                    <div class="col-lg-10">
+                        <input type="text" class="form-control" id="lname" placeholder="Enter Mobile Number">
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <div class="col-lg-10 col-lg-offset-2">
+
+                        <button type="submit" id="update" value="Register" class="btn btn-primary">Update</button>
+                        @Html.ActionLink("Click to Change your password", "ChangePassword")
+                    </div>
+                </div>
+
+            </fieldset>
+        </form>
+
+    </div>
+
+    <div id="profile">
+        
+                <div class="form-group">
+                    <label for="userName" class="col-lg-2 control-label">User Name:</label>
+                    <div class="col-lg-10">
+                        <label for="userName" id="inputEmail" class="col-lg-2 control-label"></label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="LastName" class="col-lg-2 control-label">Phone Number:</label>
+                    <div class="col-lg-10">
+                        <label for="phoneNumber" id="phoneNumber" class="col-lg-2 control-label"></label>
+                    </div>
+                </div>
+            
+        
+
+    </div>
+    <div role="tabpanel" class="index-content imgContain" id="event" aria-labelledby="event-tab" style="padding-top:20px;" >
+<br/>
+    </div>
+    <br/>
+    <div role="tabpanel" class="index-content imgContain" id="booking" aria-labelledby="book-tab" style="padding:14px">
+<br/>
+    </div>
+    <br/>
+
+    <div role="tabpanel" class="index-content imgContain" id="subs" aria-labelledby="subs-tab" style="padding:14px">
+        <br />
+    </div>
+    <br/>
+</body>
+</html>
+
+<script src="~/Scripts/UserProfile.js"></script>

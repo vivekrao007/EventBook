@@ -1,0 +1,64 @@
+﻿@{
+    ViewBag.Title = "Admin";
+}
+<style>
+    .navbar{
+        display:none;
+    }
+</style>
+@using (@Html.BeginForm("ViewEvents", "Admin"))
+{
+    <div class="row">
+        <div class="text-center col-lg-6 ">
+            <br />
+            <br />
+            <h2 style="font-family:Cambria, Cochin, Georgia, Times, Times New Roman, serif; font-style:italic;color:indigo;">ADMIN</h2>
+        </div>
+
+        <br />
+        <br />
+
+
+        <div class="col-md-9">
+            <div class="form-group align-self-center">
+                <label class="control-label col-md-2">AdminId</label>
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-envelope " aria-hidden="true"></i></span>
+                    <input class="form-control col-md-6" type="text" id="AId" name="AId" placeholder="Enter User Id" />
+
+                </div>
+            </div>
+
+            <br />
+            <div class="form-group align-self-center">
+                <label class="control-label col-md-2">AdminName</label>
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-user " aria-hidden="true"></i></span>
+                    <input class="form-control   col-md-6" type="text" id="AName" name="AName" placeholder="Enter User Name" />
+                </div>
+
+            </div>
+
+            <br />
+
+            <div class="form-group align-self-center">
+                <label class="control-label col-md-2"> AdminPassword</label>
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-lock " aria-hidden="true"></i></span>
+                    <input class="form-control   col-md-6" type="text" id="APassword" name="APassword" placeholder="Enter Password" />
+                </div>
+
+            </div>
+            <br />
+            <br />
+            <div class="text-center col-lg-8 ">
+                <div class="form-group  col-2">
+                    <input class="btn-sm col-2 " type="submit" value="Login" id="Loginbtn" name="Loginbtn" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+<script src="~/Scripts/AdminLogin.js"></script>
+

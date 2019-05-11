@@ -1,0 +1,449 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<br/>
+<div class="card-title imgContain">
+    <div class="card-group row col-md-12">
+        <div class="card-list-item col-md-4 " style="padding-left:40px;">
+            <div class="event-card table-bordered table-hover " style="width:215px;height:90px;border-color:black ">
+               
+                        <div class='col-md-4'style="padding-left:50px">
+                          
+                                <br />
+                            <div style="padding-left:20px;" >
+                                <button class="btn btn-outline-primary" style="background-color:red; color:black" id="Today">TODAY</button>
+                            </div>
+                                <span style="font-size:23px; color:black" class="glyphicon glyphicon-calendar justify-content-md-center" id="todayDate"></span>
+                  
+
+                </div>
+
+            </div>
+        </div>
+        <div class="card-list-item col-md-4 " style="padding-left:40px">
+            <div class="event-card table-bordered table-hover" style="width:215px;height:90px;border-color:black">
+
+
+                        <div class='col-md-offset-3'style="padding-right:50px">
+                         
+                                <br />
+                                <button class="btn btn-outline-primary" style="background-color:gold;color:black" align="10px" id="Tomorrow">TOMORROW</button>
+                                <br />
+                                <span style="font-size:23px;color:black" class="glyphicon glyphicon-calendar justify-content-md-center" id="tomorrowDate"></span>
+                            </div>
+                    
+
+            </div>
+
+        </div>
+
+
+        <div class="card-list-item col-md-4 " style="padding-left:40px">
+            <div class="event-card table-bordered table-hover" style="width:215px;height:90px;border-color:black">
+                
+                        <div class='col-md-2 'style="padding-left:42px">
+                            
+                                <br />
+                                <button class="btn btn-outline-primary " style="background-color:lawngreen;color:black;" align="10px" id="Weekend">THIS WEEKEND</button>
+                                <br />
+                                <span style="font-size:23px;padding-left:7px;color:black" class="glyphicon glyphicon-calendar justify-content-md-center" id="weekDate"></span>
+                            
+                    
+                </div>
+
+            </div>
+        </div>
+        
+    </div>
+    
+
+</div>
+@*<div id="event">
+
+</div>*@
+<div class="index-content imgContain" data-reactid="370" style="margin-bottom:50px;" id="imgs">
+    <div data-reactid="371">
+        <ul class="card-list " data-reactid="372" id="cards"></ul>
+    </div>
+</div>
+
+<div class="index-content imgContain" data-reactid="370" style="margin-bottom:50px;" id="todayimgs">
+    <div data-reactid="371">
+        <ul class="card-list " data-reactid="372" id="cards"></ul>
+    </div>
+</div>
+<div class="index-content imgContain" data-reactid="370" style="margin-bottom:50px;" id="tomorrowimgs">
+    <div data-reactid="371">
+        <ul class="card-list " data-reactid="372" id="cards"></ul>
+    </div>
+</div>
+<div class="index-content imgContain" data-reactid="370" style="margin-bottom:50px;" id="weekendimgs">
+    <div data-reactid="371">
+        <ul class="card-list " data-reactid="372" id="cards"></ul>
+    </div>
+</div>
+@*<asp:Panel ID="Panel1" Width="100%" Height="100%"
+               ScrollBars="Both" style="margin-right: 145px">
+        <div id="content"></div>
+    </asp:Panel>*@
+
+
+@section Scripts{
+    <script>
+        $(window).load(function () {
+            var d = new Date();
+            $('#todayDate').append(d.getDate() + '/' + (d.getMonth() + 1) + '/' + d.getFullYear());
+          
+            var tomorrow = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
+      
+            $('#tomorrowDate').append((tomorrow.getDate()) + '/' + (tomorrow.getMonth() + 1) + '/' + tomorrow.getFullYear());
+                       var satDay = 6;
+            var sat = new Date();
+            
+            sat.setDate(sat.getDate() + ((7 - sat.getDay()) + satDay) % 7);
+            $('#weekDate').append(sat.getDate() + "/" + (sat.getMonth() + 1) + "/" + sat.getFullYear());
+            $.ajax({
+
+                url: "/api/EventsTables",
+                type: "Get",
+
+                dataType: "json",
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    var d = new Date();
+
+                    $.each(data['$values'], function (key, item) {
+                       
+
+                        var sunday = new Date();
+                        var sunDay = 0;
+                        
+
+                        sunday.setDate(sunday.getDate() + ((7 - sunday.getDay()) + sunDay) % 7);
+                        
+                          if (d.getDate() <= 9) {
+                            var todayDate = '0' + d.getDate();
+                          }
+                        else
+                          {
+
+                              var todayDate = d.getDate();
+                          }
+                          if (sunday.getDate() <= 9) {
+                              var sundayDate = '0' + sunday.getDate();
+                          }
+                          else
+                          {
+                              var sundayDate = sunday.getDate();
+                          }
+                         
+                        //if (item.Date >= (d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + (todayDate) + "T00:00:00") && item.Date <= (sunday.getFullYear() + "-" + (sunday.getMonth() + 1) + "-" + (sundayDate) + "T00:00:00")) {
+                            var itemdt = new Date(item.Date);
+
+                            
+                            if (itemdt.getDate() >= todayDate && itemdt.getDate() <= sundayDate && (itemdt.getMonth() + 1) >= (d.getMonth() + 1) && (itemdt.getMonth() + 1) <= (sunday.getMonth() + 1) && (itemdt.getFullYear()) >= (d.getFullYear()) && (itemdt.getFullYear()) <= (sunday.getFullYear())){
+                            var x = '/imgs/';
+                            var path = x + item.Poster;
+                            var z = path;
+
+
+                          
+                            var imagex = $('<img />')
+                                 .attr('src', path)         // ADD IMAGE PROPERTIES.
+                                     .attr('id', item.EventId)
+
+                                     .width('113px').height('113px');
+                           
+                            var da = new Date(item.Date);
+
+                            var date = da.getDate() + '-' + (da.getMonth()+1) + '-' + da.getFullYear();
+
+                         
+                            var x = '<div class="col-md-4 "><br/><figure class><div class="card" id="' + item.EventId + '"style="border: thin solid black;width:100%;height:385px"><img class="card-img-top" id="' + item.EventId + '"src="' + path + '"style="width:100%;height:180px" alt="Card image cap"><div class="card-body"><h4 class="card-title" style="color:black;font-family:"Comic Sans MS";font-size:28px">' + item.EventName + '</h4>&nbsp;<span class="glyphicon glyphicon-calendar"></span>' + date + '<br /><br />&nbsp;<span class="glyphicon glyphicon-map-marker"></span>' + item.Location + '<h5><b><br />' + 'Rs.' + item.price + '/-' + '</h5></b></p></div></div>';
+
+
+                                $('#imgs').append(x);
+                                $('.imgContain').on("click", "img", function () {
+                                var l;
+                               
+                                var x = this.id;
+                                $.ajax({
+                                url: "/api/EventsTables/" + x,
+                                type: "Get",
+
+                                dataType: "json",
+                                contentType: false,
+                                processData: false,
+                                success: function (data) {
+                                var k = data.EventName;
+                                l = data.EventId;
+                                // @*window.location.href = "@Url.Action("Eventdisplay","Home")";*@
+                                // @*window.location.href = "@Url.Action("Eventdisplay", "Home", new {id=Model.})";*@
+                                    window.location.href = 'EventDisplay?id=' + l;
+                            }
+                            });
+                            });
+                            }
+
+                            });
+                        }
+                    });
+                });
+
+
+
+        
+        $('#Today').click(function () {
+            $('#todayimgs').empty();
+            $('#imgs').hide();
+            $('#tomorrowimgs').hide();
+            $('#weekendimgs').hide();
+            $.ajax({
+
+                url: "/api/EventsTables",
+                type: "Get",
+
+                dataType: "json",
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    var d = new Date();
+
+                    $.each(data['$values'], function (key, item) {
+                       
+                        if (d.getDate() <= 9) {
+                            var todayDate = '0' + d.getDate();
+                        }
+                        else {
+
+                            var todayDate = d.getDate();
+                        }
+                        if (item.Date == (d.getFullYear() + "-" + (d.getMonth()+1) + "-" +todayDate+ "T00:00:00")) {
+                           
+                            var x = '/imgs/';
+                            var path = x + item.Poster;
+                            var z = path;
+
+
+                            //$("#image").attr("src", path);
+                            var imagex = $('<img />')
+                            .attr('src', path)         // ADD IMAGE PROPERTIES.
+                            .attr('id', item.EventId)
+
+                            .width('113px').height('113px');
+                            //var str = '<div class="col-md-4">
+                            //<div class="card" id="' + item.EventId + '" style="border: thin solid black"><img class="card-img-top" id="' + item.EventId + '" src="' + path + '" style="width:348px;height:180px" alt="Card image cap"><div class="card-body"><h4 class="card-title" style="color:black;font-family:" Comic Sans MS";font-size:28px">' + item.EventName + '</h4>&nbsp;<span class="glyphicon glyphicon-calendar"></span>' + item.Date + '<br /><br />&nbsp;<span class="glyphicon glyphicon-map-marker"></span>' + item.location + '<p class="card-text"><small class="text-muted"><br />' + + '</small></p></div></div>';
+
+                            //@*<div class="event-card-action" data-reactid="381">
+                                        // <span class="event-card-button" data-reactid="382">BUY</span>
+                                        //</div>*@
+                            var dtoday= new Date(item.Date);
+
+                            var date = dtoday.getDate() + '-' + (dtoday.getMonth()+1) + '-' + dtoday.getFullYear();
+                            var x = '<div class="col-lg-4 col-md-6 col-sm-12 col-xs-12"><br/><figure class><div class="card" id="' + item.EventId + '"style="border: thin solid black;width:340px;height:385px"><img class="card-img-top" id="' + item.EventId + '"src="' + path + '"style="width:337.9px;height:180px" alt="Card image cap"><div class="card-body"><h4 class="card-title" style="color:black;font-family:"Comic Sans MS";font-size:28px">' + item.EventName + '</h4>&nbsp;<span class="glyphicon glyphicon-calendar"></span>' + date + '<br /><br />&nbsp;<span class="glyphicon glyphicon-map-marker"></span>' + item.Location + '<h5><b><br />' + 'Rs.' + item.price + '/-' + '</h5></b></p></div></div>';
+
+
+                            $('#todayimgs').append(x);
+                            $('.imgContain').on("click", "img", function () {
+                                var l;
+                                
+                                var x = this.id;
+                                $.ajax({
+                                    url: "/api/EventsTables/" + x,
+                                    type: "Get",
+
+                                    dataType: "json",
+                                    contentType: false,
+                                    processData: false,
+                                    success: function (data) {
+                                        var k = data.EventName;
+                                        l = data.EventId;
+                                        // @*window.location.href = "@Url.Action("Eventdisplay","Home")";*@
+                                        // @*window.location.href = "@Url.Action("Eventdisplay", "Home", new {id=Model.})";*@
+                                        window.location.href = 'EventDisplay?id=' + l;
+                                    }
+                                });
+                            });
+                        }
+
+                    });
+                }
+            });
+            $('#todayimgs').show();
+        });
+                   
+        
+        $('#Tomorrow').click(function () {
+            $('#tomorrowimgs').empty();
+            $('#imgs').hide();
+            $('#todayimgs').hide();
+            $('#weekendimgs').hide();
+            $.ajax({
+
+                url: "/api/EventsTables",
+                type: "Get",
+
+                dataType: "json",
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                   
+                    var d= new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
+                    if ((d.getDate() <= 9)) {
+                        var tomorrowDate = '0' + (d.getDate());
+                    }
+                    else {
+
+                        var tomorrowDate = d.getDate();
+                    }
+                    $.each(data['$values'], function (key, item) {
+                        
+
+                        if (item.Date == (d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + (tomorrowDate) + "T00:00:00")) {
+                            
+                            var x = '/imgs/';
+                            var path = x + item.Poster;
+                            var z = path;
+
+
+                            //$("#image").attr("src", path);
+                            var imagex = $('<img />')
+                            .attr('src', path)         // ADD IMAGE PROPERTIES.
+                            .attr('id', item.EventId)
+
+                            .width('113px').height('113px');
+                            //var str = '<div class="col-md-4">
+                            //<div class="card" id="' + item.EventId + '" style="border: thin solid black"><img class="card-img-top" id="' + item.EventId + '" src="' + path + '" style="width:348px;height:180px" alt="Card image cap"><div class="card-body"><h4 class="card-title" style="color:black;font-family:" Comic Sans MS";font-size:28px">' + item.EventName + '</h4>&nbsp;<span class="glyphicon glyphicon-calendar"></span>' + item.Date + '<br /><br />&nbsp;<span class="glyphicon glyphicon-map-marker"></span>' + item.location + '<p class="card-text"><small class="text-muted"><br />' + + '</small></p></div></div>';
+
+                            //@*<div class="event-card-action" data-reactid="381">
+                                            // <span class="event-card-button" data-reactid="382">BUY</span>
+                                            //</div>*@
+                            var tmrwd = new Date(item.Date);
+
+                            var date = tmrwd.getDate() + '-' + (tmrwd.getMonth()+1) + '-' + tmrwd.getFullYear();
+                            var x = '<div class="col-lg-4 col-md-6 col-sm-12 col-xs-12"><br/><figure class><div class="card" id="' + item.EventId + '"style="border: thin solid black;width:340px;height:385px"><img class="card-img-top" id="' + item.EventId + '"src="' + path + '"style="width:337.9px;height:180px" alt="Card image cap"><div class="card-body"><h4 class="card-title" style="color:black;font-family:"Comic Sans MS";font-size:28px">' + item.EventName + '</h4>&nbsp;<span class="glyphicon glyphicon-calendar"></span>' + date + '<br /><br />&nbsp;<span class="glyphicon glyphicon-map-marker"></span>' + item.Location + '<h5><b><br />' + 'Rs.' + item.price + '/-' + '</h5></b></p></div></div>';
+
+
+                            $('#tomorrowimgs').append(x);
+                            $('.imgContain').on("click", "img", function () {
+                                var l;
+                               
+                                var x = this.id;
+                                $.ajax({
+                                    url: "/api/EventsTables/" + x,
+                                    type: "Get",
+
+                                    dataType: "json",
+                                    contentType: false,
+                                    processData: false,
+                                    success: function (data) {
+                                        var k = data.EventName;
+                                        l = data.EventId;
+                                        // @*window.location.href = "@Url.Action("Eventdisplay","Home")";*@
+                                        // @*window.location.href = "@Url.Action("Eventdisplay", "Home", new {id=Model.})";*@
+                                        window.location.href = 'EventDisplay?id=' + l;
+                                    }
+                                });
+                            });
+                        }
+
+                    });
+                }
+            });
+            $('#tomorrowimgs').show();
+        });
+        $('#Weekend').click(function () {
+                   
+                        $('#weekendimgs').empty();
+                            $('#imgs').hide();
+                            $('#todayimgs').hide();
+                            $('#tomorrowimgs').hide();
+                            $.ajax({
+
+                                url: "/api/EventsTables",
+                                type: "Get",
+
+                                dataType: "json",
+                                contentType: false,
+                                processData: false,
+                                success: function (data) {
+                                    var d = new Date();
+
+                                    $.each(data['$values'], function (key, item) {
+                                        
+                                        var satDay = 6;
+                                        var sat = new Date();
+                                        var sunday = new Date();
+                                        var sunDay = 0;
+                                        //or any date you calculate from
+                                        sat.setDate(sat.getDate() + ((7 - sat.getDay()) + satDay) % 7);
+                                        sunday.setDate(sunday.getDate() + ((7 - sunday.getDay()) + sunDay) % 7);
+                                      
+                                        if ((sunday.getDate() <= 9))
+                                        {
+                                           var SunDate = '0' + sunday.getDate();
+                                        }
+                                        else
+                                        {
+                                            var SunDate = sunday.getDate();
+                                        }
+                                        if (sat.getDate() <= 9)
+                                        {
+                                            var SatDate = '0' + sat.getDate();
+                                        }
+                                        else {
+                                            var SatDate = sat.getDate();
+                                        }
+                                        
+                                        if (item.Date == (sat.getFullYear() + "-" + (sat.getMonth() + 1) + "-" + (SatDate) + "T00:00:00") || item.Date == (sunday.getFullYear() + "-" + (sunday.getMonth() + 1) + "-" + (SunDate) + "T00:00:00")) {
+                                            
+                                            var x = '/imgs/';
+                                            var path = x + item.Poster;
+                                            var z = path;
+
+
+                                            
+                                            var imagex = $('<img />')
+                                            .attr('src', path)         // ADD IMAGE PROPERTIES.
+                                            .attr('id', item.EventId)
+
+                                            .width('113px').height('113px');
+                                           
+                                            var d = new Date(item.Date);
+                                          
+                                            var date = d.getDate() + '-' + (d.getMonth()+1)+ '-' + d.getFullYear();
+                                            var x = '<div class="col-lg-4 col-md-6 col-sm-12 col-xs-12"><br/><figure class><div class="card" id="' + item.EventId + '"style="border: thin solid black;width:340px;height:385px"><img class="card-img-top" id="' + item.EventId + '"src="' + path + '"style="width:337.9px;height:180px" alt="Card image cap"><div class="card-body"><h4 class="card-title" style="color:black;font-family:"Comic Sans MS";font-size:28px">' + item.EventName + '</h4>&nbsp;<span class="glyphicon glyphicon-calendar"></span>' + date + '<br /><br />&nbsp;<span class="glyphicon glyphicon-map-marker"></span>' + item.Location + '<h5><b><br />' + 'Rs.' + item.price + '/-' + '</h5></b></p></div></div>';
+
+
+                                            $('#weekendimgs').append(x);
+                                            $('.imgContain').on("click", "img", function () {
+                                                var l;
+                                                
+                                                var x = this.id;
+                                                $.ajax({
+                                                    url: "/api/EventsTables/" + x,
+                                                    type: "Get",
+
+                                                    dataType: "json",
+                                                    contentType: false,
+                                                    processData: false,
+                                                    success: function (data) {
+                                                        var k = data.EventName;
+                                                        l = data.EventId;
+                                                       
+                                                        window.location.href = 'EventDisplay?id=' + l;
+                                                    }
+                                                });
+                                            });
+                                        }
+
+                                    });
+                                }
+                            });
+                                   $('#weekendimgs').show();
+                            });
+    </script>
+    }
+           

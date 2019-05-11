@@ -1,0 +1,390 @@
+﻿@{
+    ViewBag.Title = "EventDisplay";
+}
+
+@*<h2>@ViewBag.eventid</h2>*@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<div id="sessionDiv" data-id="@Session["eventid"]"></div>
+
+<div class="row" style="align-content:center">
+    <br />
+    <br />
+
+    <div class="col-md-8">
+        <img class="float-right" id="di" style="width:100%;height:340px;" />
+
+    </div>
+
+    <div class="card col-md-4" style="padding-left:5%">
+
+        <div class="card-block table-bordered" style="width:100% ;height:340px; padding-left:4%; text-align:left;border-color:black; ">
+            <br />
+
+            <h2 class="card-title" id="para2" style="width:90%; height:70px;text-align:left;font-size:x-large;color:black;padding-left:3%"></h2>
+            <br />
+
+
+            <h4 class="glyphicon glyphicon-map-marker  " id="para3" style="max-height:30px;padding-left:3%;color:black"></h4>
+            <br />
+
+            <h4 class="glyphicon glyphicon-calendar" id="para4" style="padding-left:3%;color:black"></h4>
+
+            <br />
+            <h4 class="fa fa-inr" id="price" style="font-size:18px;color:black;padding-left:3%;text-align:left">&nbsp;&nbsp;</h4>
+
+            <br />
+
+
+            <div class="row">
+                <p id="soldout"></p>
+                @*<button id="booknow" class="btn btn-outline-primary" style="background-color:darkseagreen;color:black">Book Now</button>*@
+                <div class="btn-toolbar row" style="padding-left:20%">
+
+                    <button type="button" id="booknow" class="btn  btn-md" data-toggle="modal" style="background-color:green" data-target="#myModal">Book Now</button>
+                    <button type="button" id="subscribe" class="btn " data-toggle="modal" style="background-color:coral" data-target="#myModal2">Subscribe</button>
+                </div>
+
+                <div class="container row text-center">
+
+                    <!-- Trigger the modal with a button -->
+                    <!-- Modal -->
+                    <div class="modal fade" id="myModal" role="dialog">
+                        <div class="modal-dialog modal-lg ">
+                            <div class="modal-content table-bordered" style="border-color:black">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+                                    <h4 class="modal-title" style="color:blue" id="EventName"></h4>
+                                    <p class="card-text glyphicon glyphicon-map-marker" style="color:royalblue" id="venue"></p>|
+                                    <p class="card-text glyphicon glyphicon-calendar" style="color:royalblue" id="date"></p>
+
+                                </div>
+                                <div class="modal-body">
+                                    <span>  Regular ticket </span>
+
+
+                                    :         Rs. <span id="para5"></span>
+
+                                    <span class="multiplier"> x </span>
+
+                                    <span>
+                                        <select style="color:black" id="noOfTickets">
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                        </select>
+                                    </span>
+                                    <div class="col-md-12" id="totalPrice">Total Price:</div>
+                                    <div style="color:darkcyan;" id="remainTickets"></div>
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" id="buy" style="background-color:forestgreen" data-dismiss="modal">Confirm</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="container row text-center">
+
+                    <!-- Trigger the modal with a button -->
+                    <!-- Modal -->
+                    <div class="modal fade" id="myModal2" role="dialog">
+                        <div class="modal-dialog " style="max-width:400px;" id="subscription">
+                            <div class="modal-content table-bordered" style="border-color:black">
+                                <div class="modal-header">
+                                    <button type="button" class="close" id="close" data-dismiss="modal">&times;</button>
+                                    <br />
+                                    <label class="col-md-8 control-label" style="color:blue;font-size:14px;padding-left:12%">Subscription Priority</label>
+                                    <br />
+                                </div>
+
+                                <div class="modal-body" style="padding-left:20%">
+
+                                    @*<input type="radio" name="priority" value="High"> High<br>
+                                        <input type="radio" name="priority" value="Medium"> Medium<br>
+                                        <input type="radio" name="priority" value="Low"> Low*@
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" style="color:maroon" name="optionsRadios" id="1" value="High">
+                                            High
+                                        </label>
+                                    </div>
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" style="color:maroon" name="optionsRadios" id="2" value="Medium">
+                                            Medium
+                                        </label>
+                                    </div>
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" style="color:maroon" name="optionsRadios" id="3" value="Low">
+                                            Low
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button id="ok" class="btn btn-outline-danger" style="background-color:forestgreen" data-dismiss="modal" value="Subscribe"> Confirm </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+
+        </div>
+    </div>
+</div>
+<br />
+
+
+
+
+
+
+<div class="container col-md-12 col-lg-12" style="align-content:inherit">
+    <br />
+
+    <u>
+        <b>
+            <span style="font-style:italic,oblique,;color:black;font-size:28px;padding-right:75%">DESCRIPTION</span>
+        </b>
+    </u>
+
+    <br />
+    <br />
+    <p id="para1" style="color:black;font-size:22px"></p>
+</div>
+
+
+@section Scripts{
+    <script>
+    var x="@Session["eventid"]";
+    
+        $('#sessionDiv').val(x);
+
+        var x = $('#sessionDiv').val();
+        $('#subscription').hide();
+        $('#ok').hide();
+        $('#subscribe').val('Subscribe');
+        $('#subscribe').html('Subscribe');
+        $.ajax({
+            url: "/api/EventsTables/" + x,
+            type: "Get",
+
+            dataType: "json",
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                var event_id = data.EventId;
+                var eventTickets = data.Tickets;
+                $.ajax({
+                    url: "/api/BookingTables",
+                    type: "Get",
+                    dataType: "json",
+                    contentType: false,
+                    processData: false,
+                    success: function (data) {
+                        $.each(data["$values"], function (key, item) {
+                            if (item.EventId == event_id) {
+                                var ticketsBooked = item.NoOfTickets;
+                                amount = amount + ticketsBooked;
+                            }
+                        })
+                        remain = eventTickets - amount;
+                        if (remain == 0) {
+                            $('#subscribe').hide();
+                            $('#booknow').hide();
+                            $('#soldout').append('Sold Out');
+                        }
+                    }
+                });
+            }
+        });
+        $.ajax({
+            url: '/userid',
+            type: "Get",
+
+            dataType: "json",
+            contentType: false,
+            processData: false,
+            success: function (data) {
+
+
+                var rec1 = {
+                    "userid": data,
+                    "cat": " ",
+                    "eventId": x
+                }
+                var y = JSON.stringify(rec1);
+
+                $.ajax({
+                    url: "/Unsubscribe",
+                    type: "Post",
+                    async: false,
+                    dataType: "json",
+                    data: y,
+                    contentType: 'application/json; charset=utf-8',
+                    success: function (data) {
+                        if (data.$values[0].Subscription_Id) {
+                            $('#subscribe').val('Unsubscribe');
+                            $('#subscribe').html('Unsubscribe');
+                        }
+                    }
+                });
+            }
+        });
+        $.ajax({
+            url: "/api/EventsTables/" + x,
+            type: "Get",
+            dataType: "json",
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                var im = '/imgs/';
+                var path = im + data.Poster;
+                $("#image").attr("src", path);
+                var mi = $('#di')
+                     .attr('src', path)         // ADD IMAGE PROPERTIES.
+                         .attr('id', data.EventId);
+                var k = data.EventName;
+                var l = data.Location;
+                var d = new Date(data.Date);
+
+                var date = d.getDate() + '-' + (d.getMonth() + 1) + '-' + d.getFullYear();
+                var m = date;
+                var n = data.Description;
+                var i = data.EventId;
+                var j = data.price;
+                ($('#para2')).append("  " + k);
+                ($('#para3')).append("  " + l);
+                ($('#para4')).append("  " + m);
+                ($('#para1')).append("  " + n);
+                ($('#para5')).append("  " + j);
+
+                $('#subscribe').click(function () {
+                    if ($('#subscribe').val() == "Subscribe") {
+                        $('#subscribe').hide();
+                        $('#subscription').show();
+                        $('#ok').show();
+                        $('#close').click(function () {
+                            $('#subscribe').show();
+                        })
+
+
+                        $('#ok').click(function () {
+                            if ($('#1').is(':checked')) {
+                                var priority = $('#1').val();
+                            }
+                            else if ($('#2').is(':checked')) {
+                                var priority = $('#2').val();
+                            }
+                            else {
+                                var priority = $('#3').val();
+                            }
+                            $.ajax({
+                                url: '/userid',
+                                type: "Get",
+                                dataType: "json",
+                                contentType: false,
+                                processData: false,
+                                success: function (data) {
+
+                                    var rec = {
+                                        Subscription_Id: 0,
+                                        User_Id: data,
+                                        Event_Id: x,
+                                        Priority: priority
+                                    };
+                                    var z = JSON.stringify(rec);
+
+
+                                    $.ajax({
+                                        url: '/api/SubscriptionTables',
+                                        cache: false,
+                                        type: 'Post',
+                                        data: z,
+                                        contentType: 'application/json; charset=utf-8',
+                                        dataType: 'json',
+                                        success: function (data) {
+                                            $('#subscribe').val('Unsubscribe');
+
+                                            $('#subscribe').html('Unsubscribe');
+                                            $('#subscription').hide();
+                                            $('#ok').hide();
+                                            $('#subscribe').show();
+                                            alert('You Subscribed to this event!!');
+                                            alert('Thank You for Subscribing!');
+                                            window.location.reload();
+                                        }
+                                    });
+
+                                }
+                            });
+
+                        });
+
+                    }
+                    else if ($('#subscribe').val() == "Unsubscribe") {
+                        $('#subscription').hide();
+                        $.ajax({
+                            url: '/userid',
+                            type: "Get",
+                            dataType: "json",
+                            contentType: false,
+                            processData: false,
+                            success: function (data) {
+                                var rec1 = {
+                                    "userid": data,
+                                    "cat": " ",
+                                    "eventId": x
+                                }
+                                var y = JSON.stringify(rec1);
+                                $.ajax({
+                                    url: "/Unsubscribe",
+                                    type: "Post",
+                                    async: false,
+                                    dataType: "json",
+                                    data: y,
+                                    contentType: 'application/json; charset=utf-8',
+                                    success: function (data) {
+                                        $.ajax({
+                                            url: '/api/SubscriptionTables?id=' + data.$values[0].Subscription_Id,
+                                            cache: false,
+                                            type: 'DELETE',
+
+                                            contentType: 'application/json; charset=utf-8',
+                                            dataType: 'json',
+                                            success: function (data) {
+                                                $('#subscribe').val('Subscribe');
+                                                $('#subscribe').html('Subscribe');
+
+                                                alert('You Unsubscribed to this event!!');
+                                                alert('Thank You');
+                                                window.location.reload();
+                                            }
+                                        });
+                                    }
+                                });
+
+                            }
+                        });
+                    }
+
+                });
+            }
+        });
+
+
+    </script>
+}
+
+
+

@@ -1,0 +1,93 @@
+﻿
+@{
+    ViewBag.Title = "BookingEvent";
+}
+@*<h2>@ViewBag.eventid</h2>*@
+
+
+
+
+
+
+@*<!DOCTYPE html>
+
+    <head>
+        <title></title>
+        <meta charset="utf-8" />
+        <script src="bootstrap.js"></script>
+        <script src="bootstrap.min.js"></script>
+        <link href="bootstrap.min.css" rel="stylesheet" />
+    </head>*@
+<body style="background-color:gainsboro;">
+    <div id="sessionDiv" data-id="@Session["eventid"]"></div>
+    <br />
+    <br />
+    <br />
+    <br />
+    <center>
+        <div class="card text-center mb-3  col-lg-6 " style="background-color:moccasin;">
+            <div class="card-header" style="background-color:moccasin;" id="category">
+
+            </div>
+            <div class="card-block">
+                <h4 class="card-title" id="EventName"></h4>
+                <p class="card-text" id="venue"></p>
+                <p class="card-text" id="date"></p>
+
+            </div>
+
+
+            <div class="col-md-12">
+                <span>  Regular ticket </span>
+
+
+                :         Rs. <span id="price"></span>
+
+                <span class="multiplier"> x </span>
+
+                <span>
+                    <select id="noOfTickets">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                </span>
+
+            </div>
+
+
+
+
+            <br />
+            <div class="col-md-12" id="totalPrice">
+
+            </div>
+            <div class="card-footer text-center" style="background-color:moccasin;" id="remainTickets"></div>
+            <br />
+
+            <div class="col-md-12">
+                <button class="btn btn-outline-warning align-content-md-center" id="buy" style="width:100px; ">confirm</button>
+            </div>
+            <br />
+        </div>
+
+    </center>
+
+</body>
+
+@section Scripts
+{
+    <script>
+            var x = "@Session["eventid"]";
+          
+
+            $('#sessionDiv').val(x);
+    </script>
+
+
+}
+
+
+

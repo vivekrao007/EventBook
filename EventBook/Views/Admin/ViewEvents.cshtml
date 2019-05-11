@@ -1,0 +1,119 @@
+﻿
+@{
+    ViewBag.Title = "ViewEvents";
+}
+<style>
+    .navbar {
+        display: none;
+    }
+</style>
+<h2 style="font-family:Cambria, Cochin, Georgia, Times, Times New Roman, serif; font-style:italic;color:indigo;">ViewEvents</h2>
+<br />
+
+<div class="col-md-12 align-content-center " style="padding-left:6%;padding-right:10%">
+    <br />
+    <ul id="clothing-nav " style="background-color:lightgray;padding-left:13%;" class="nav nav-pills " role="tablist">
+
+        <li class="nav-item col-md-2">
+
+            <a class="nav-link active" href="#sports1" id="sports-tab" role="tab" data-toggle="tab" aria-controls="sports" aria-expanded="true">sports</a>
+        </li>
+        <li class="nav-item col-md-2">
+            <a class="nav-link  " href="#comedy1" role="tab" id="comedy-tab" data-toggle="tab" aria-controls="comedy" aria-expanded="true">comedy</a>
+        </li>
+        <li class="nav-item col-md-2">
+            <a class="nav-link  " href="#music1" role="tab" id="music-tab" data-toggle="tab" aria-controls="music" aria-expanded="true">music</a>
+        </li>
+        <li class="nav-item col-md-2">
+            <a class="nav-link " href="#food1" role="tab" id="food-tab" data-toggle="tab" aria-controls="food" aria-expanded="true">food-drinks</a>
+        </li>
+        <li class="nav-item col-md-2">
+            <a class="nav-link  " href="#movies1" role="tab" id="movies-tab" data-toggle="tab" aria-controls="movies" aria-expanded="true">movies</a>
+        </li>
+
+    </ul>
+    <br />
+    <br />
+    <div id="clothing-nav-content  " class="tab-content col-md-12">
+        <div role="tabpanel" class="tab-pane  active " id="sports1" aria-labelledby="sports-tab">
+            <div id="SportsList" name="SportsList">
+                <table class="table-bordered table-hover " style="width:100%;" id="SportsListTable" name="SportsListTable">
+                    <tr class="align-items-xl-center ">
+                        <th>EventId</th>
+                        <th>UserId</th>
+                        <th>Name</th>
+                        <th>Location</th>
+                        <th>Date</th>
+                        <th>price</th>
+                        <th style="width:120px;">Action</th>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div role="tabpanel" class="tab-pane  fade  " id="comedy1" aria-labelledby="comedy-tab">
+            <div id="ComedyList" name="ComedyList">
+                <table class="table-bordered table-hover" style="width:100%;" id="ComedyTable" name="ComedyTable">
+                    <tr>
+                        <th id="EventId">EventId</th>
+                        <th>UserId</th>
+                        <th>Name</th>
+                        <th>Location</th>
+                        <th>Date</th>
+                        <th>price</th>
+                        <th style="width:120px;">Action</th>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div role="tabpanel" class="tab-pane  fade " id="music1" aria-labelledby="music-tab">
+            <div id="MusicList" name="MusicList">
+                <table class="table-bordered table-hover" style="width:100%;" id="MusicTable" name="MusicTable">
+                    <tr>
+                        <th>EventId</th>
+                        <th>UserId</th>
+                        <th>Name</th>
+                        <th>Location</th>
+                        <th>Date</th>
+                        <th>price</th>
+                        <th style="width:120px;">Action</th>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div role="tabpanel" class="tab-pane  fade " id="food1" aria-labelledby="food-tab">
+            <div id="FoodDrinkList" name="FoodDrinkList">
+                <table class="table-bordered table-hover" style="width:100%;" id="FoodDrinkTable" name="FoodDrinkTable">
+                    <tr>
+                        <th>EventId</th>
+                        <th>UserId</th>
+                        <th>Name</th>
+                        <th>Location</th>
+                        <th>Date</th>
+                        <th>price</th>
+                        <th style="width:120px;">Action</th>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div role="tabpanel" class="tab-pane  fade " id="movies1" aria-labelledby="movies-tab">
+            <div id="MoviesList" name="MoviesList">
+                <table class="table-bordered table-hover" style="width:100%;" id="MoviesTable" name="MoviesTable">
+                    <tr>
+                        <th>EventId</th>
+                        <th>UserId</th>
+                        <th>Name</th>
+                        <th>Location</th>
+                        <th>Date</th>
+                        <th>price</th>
+                        <th style="width:120px;">Action</th>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/ViewEvents.js"></script>
+
+
+

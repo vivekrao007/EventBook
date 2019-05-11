@@ -1,0 +1,407 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AdminTable">
+          <Key>
+            <PropertyRef Name="AdminId" />
+          </Key>
+          <Property Name="AdminId" Type="int" Nullable="false" />
+          <Property Name="AdminName" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="AdminPassword" Type="varchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetUsers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="256" />
+          <Property Name="EmailConfirmed" Type="bit" Nullable="false" />
+          <Property Name="PasswordHash" Type="nvarchar(max)" />
+          <Property Name="SecurityStamp" Type="nvarchar(max)" />
+          <Property Name="PhoneNumber" Type="nvarchar(max)" />
+          <Property Name="PhoneNumberConfirmed" Type="bit" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="bit" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="datetime" />
+          <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="int" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <EntityType Name="BookingTable">
+          <Key>
+            <PropertyRef Name="Ticket_Id" />
+          </Key>
+          <Property Name="Ticket_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="User_Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="EventId" Type="int" Nullable="false" />
+          <Property Name="NoOfTickets" Type="int" Nullable="false" />
+          <Property Name="Amount" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EventsTable">
+          <Key>
+            <PropertyRef Name="EventId" />
+          </Key>
+          <Property Name="EventId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="EventName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Poster" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="Location" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="Date" Type="date" Nullable="false" />
+          <Property Name="Category" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="price" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Description" Type="varchar(max)" Nullable="false" />
+          <Property Name="Tickets" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SubscriptionTable">
+          <Key>
+            <PropertyRef Name="Subscription_Id" />
+          </Key>
+          <Property Name="Subscription_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Event_Id" Type="int" Nullable="false" />
+          <Property Name="User_Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Priority" Type="varchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__BookingTa__Event__04E4BC85">
+          <End Role="EventsTable" Type="Self.EventsTable" Multiplicity="1" />
+          <End Role="BookingTable" Type="Self.BookingTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EventsTable">
+              <PropertyRef Name="EventId" />
+            </Principal>
+            <Dependent Role="BookingTable">
+              <PropertyRef Name="EventId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__BookingTa__User___74AE54BC">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="BookingTable" Type="Self.BookingTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="BookingTable">
+              <PropertyRef Name="User_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__EventsTab__UserI__02FC7413">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="EventsTable" Type="Self.EventsTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EventsTable">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Subscript__Event__03F0984C">
+          <End Role="EventsTable" Type="Self.EventsTable" Multiplicity="1" />
+          <End Role="SubscriptionTable" Type="Self.SubscriptionTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EventsTable">
+              <PropertyRef Name="EventId" />
+            </Principal>
+            <Dependent Role="SubscriptionTable">
+              <PropertyRef Name="Event_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Subscript__User___70DDC3D8">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="SubscriptionTable" Type="Self.SubscriptionTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SubscriptionTable">
+              <PropertyRef Name="User_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ModelStoreContainer">
+          <EntitySet Name="AdminTable" EntityType="Self.AdminTable" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BookingTable" EntityType="Self.BookingTable" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EventsTable" EntityType="Self.EventsTable" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SubscriptionTable" EntityType="Self.SubscriptionTable" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__BookingTa__Event__04E4BC85" Association="Self.FK__BookingTa__Event__04E4BC85">
+            <End Role="EventsTable" EntitySet="EventsTable" />
+            <End Role="BookingTable" EntitySet="BookingTable" />
+          </AssociationSet>
+          <AssociationSet Name="FK__BookingTa__User___74AE54BC" Association="Self.FK__BookingTa__User___74AE54BC">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="BookingTable" EntitySet="BookingTable" />
+          </AssociationSet>
+          <AssociationSet Name="FK__EventsTab__UserI__02FC7413" Association="Self.FK__EventsTab__UserI__02FC7413">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="EventsTable" EntitySet="EventsTable" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Subscript__Event__03F0984C" Association="Self.FK__Subscript__Event__03F0984C">
+            <End Role="EventsTable" EntitySet="EventsTable" />
+            <End Role="SubscriptionTable" EntitySet="SubscriptionTable" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Subscript__User___70DDC3D8" Association="Self.FK__Subscript__User___70DDC3D8">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="SubscriptionTable" EntitySet="SubscriptionTable" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="EventsTable">
+          <Key>
+            <PropertyRef Name="EventId" />
+          </Key>
+          <Property Name="EventId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="EventName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Poster" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Location" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Category" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="AspNetUser" Relationship="Model.FK__EventsTab__UserI__4CA06362" FromRole="EventsTable" ToRole="AspNetUser" />
+          <NavigationProperty Name="BookingTables" Relationship="Model.FK__BookingTa__Event__73BA3083" FromRole="EventsTable" ToRole="BookingTable" />
+          <NavigationProperty Name="SubscriptionTables" Relationship="Model.FK__Subscript__Event__6FE99F9F" FromRole="EventsTable" ToRole="SubscriptionTable" />
+          <Property Name="price" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Tickets" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="Entities2" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="EventsTables" EntityType="Self.EventsTable" />
+          <EntitySet Name="AdminTables" EntityType="Model.AdminTable" />
+          <EntitySet Name="AspNetUsers" EntityType="Model.AspNetUser" />
+          <EntitySet Name="BookingTables" EntityType="Model.BookingTable" />
+          <EntitySet Name="SubscriptionTables" EntityType="Model.SubscriptionTable" />
+          <AssociationSet Name="FK__BookingTa__User___74AE54BC" Association="Model.FK__BookingTa__User___74AE54BC">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="BookingTable" EntitySet="BookingTables" />
+          </AssociationSet>
+          <AssociationSet Name="FK__EventsTab__UserI__4CA06362" Association="Model.FK__EventsTab__UserI__4CA06362">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="EventsTable" EntitySet="EventsTables" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Subscript__User___70DDC3D8" Association="Model.FK__Subscript__User___70DDC3D8">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="SubscriptionTable" EntitySet="SubscriptionTables" />
+          </AssociationSet>
+          <AssociationSet Name="FK__BookingTa__Event__73BA3083" Association="Model.FK__BookingTa__Event__73BA3083">
+            <End Role="EventsTable" EntitySet="EventsTables" />
+            <End Role="BookingTable" EntitySet="BookingTables" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Subscript__Event__6FE99F9F" Association="Model.FK__Subscript__Event__6FE99F9F">
+            <End Role="EventsTable" EntitySet="EventsTables" />
+            <End Role="SubscriptionTable" EntitySet="SubscriptionTables" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="AdminTable">
+          <Key>
+            <PropertyRef Name="AdminId" />
+          </Key>
+          <Property Name="AdminId" Type="Int32" Nullable="false" />
+          <Property Name="AdminName" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="AdminPassword" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="AspNetUser">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
+          <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="BookingTables" Relationship="Model.FK__BookingTa__User___74AE54BC" FromRole="AspNetUser" ToRole="BookingTable" />
+          <NavigationProperty Name="EventsTables" Relationship="Model.FK__EventsTab__UserI__4CA06362" FromRole="AspNetUser" ToRole="EventsTable" />
+          <NavigationProperty Name="SubscriptionTables" Relationship="Model.FK__Subscript__User___70DDC3D8" FromRole="AspNetUser" ToRole="SubscriptionTable" />
+        </EntityType>
+        <EntityType Name="BookingTable">
+          <Key>
+            <PropertyRef Name="Ticket_Id" />
+          </Key>
+          <Property Name="Ticket_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="User_Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="EventId" Type="Int32" Nullable="false" />
+          <Property Name="NoOfTickets" Type="Int32" Nullable="false" />
+          <Property Name="Amount" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="AspNetUser" Relationship="Model.FK__BookingTa__User___74AE54BC" FromRole="BookingTable" ToRole="AspNetUser" />
+          <NavigationProperty Name="EventsTable" Relationship="Model.FK__BookingTa__Event__73BA3083" FromRole="BookingTable" ToRole="EventsTable" />
+        </EntityType>
+        <EntityType Name="SubscriptionTable">
+          <Key>
+            <PropertyRef Name="Subscription_Id" />
+          </Key>
+          <Property Name="Subscription_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Event_Id" Type="Int32" Nullable="false" />
+          <Property Name="User_Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Priority" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="AspNetUser" Relationship="Model.FK__Subscript__User___70DDC3D8" FromRole="SubscriptionTable" ToRole="AspNetUser" />
+          <NavigationProperty Name="EventsTable" Relationship="Model.FK__Subscript__Event__6FE99F9F" FromRole="SubscriptionTable" ToRole="EventsTable" />
+        </EntityType>
+        <Association Name="FK__BookingTa__User___74AE54BC">
+          <End Type="Model.AspNetUser" Role="AspNetUser" Multiplicity="1" />
+          <End Type="Model.BookingTable" Role="BookingTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="BookingTable">
+              <PropertyRef Name="User_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__EventsTab__UserI__4CA06362">
+          <End Type="Model.AspNetUser" Role="AspNetUser" Multiplicity="1" />
+          <End Type="Model.EventsTable" Role="EventsTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EventsTable">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Subscript__User___70DDC3D8">
+          <End Type="Model.AspNetUser" Role="AspNetUser" Multiplicity="1" />
+          <End Type="Model.SubscriptionTable" Role="SubscriptionTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SubscriptionTable">
+              <PropertyRef Name="User_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__BookingTa__Event__73BA3083">
+          <End Type="Model.EventsTable" Role="EventsTable" Multiplicity="1" />
+          <End Type="Model.BookingTable" Role="BookingTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EventsTable">
+              <PropertyRef Name="EventId" />
+            </Principal>
+            <Dependent Role="BookingTable">
+              <PropertyRef Name="EventId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Subscript__Event__6FE99F9F">
+          <End Type="Model.EventsTable" Role="EventsTable" Multiplicity="1" />
+          <End Type="Model.SubscriptionTable" Role="SubscriptionTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EventsTable">
+              <PropertyRef Name="EventId" />
+            </Principal>
+            <Dependent Role="SubscriptionTable">
+              <PropertyRef Name="Event_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="Entities2">
+          <EntitySetMapping Name="EventsTables">
+            <EntityTypeMapping TypeName="Model.EventsTable">
+              <MappingFragment StoreEntitySet="EventsTable">
+                <ScalarProperty Name="Tickets" ColumnName="Tickets" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="EventId" ColumnName="EventId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="EventName" ColumnName="EventName" />
+                <ScalarProperty Name="Poster" ColumnName="Poster" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Category" ColumnName="Category" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AdminTables">
+            <EntityTypeMapping TypeName="Model.AdminTable">
+              <MappingFragment StoreEntitySet="AdminTable">
+                <ScalarProperty Name="AdminPassword" ColumnName="AdminPassword" />
+                <ScalarProperty Name="AdminName" ColumnName="AdminName" />
+                <ScalarProperty Name="AdminId" ColumnName="AdminId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUsers">
+            <EntityTypeMapping TypeName="Model.AspNetUser">
+              <MappingFragment StoreEntitySet="AspNetUsers">
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+                <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
+                <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
+                <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
+                <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BookingTables">
+            <EntityTypeMapping TypeName="Model.BookingTable">
+              <MappingFragment StoreEntitySet="BookingTable">
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="NoOfTickets" ColumnName="NoOfTickets" />
+                <ScalarProperty Name="EventId" ColumnName="EventId" />
+                <ScalarProperty Name="User_Id" ColumnName="User_Id" />
+                <ScalarProperty Name="Ticket_Id" ColumnName="Ticket_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SubscriptionTables">
+            <EntityTypeMapping TypeName="Model.SubscriptionTable">
+              <MappingFragment StoreEntitySet="SubscriptionTable">
+                <ScalarProperty Name="Priority" ColumnName="Priority" />
+                <ScalarProperty Name="User_Id" ColumnName="User_Id" />
+                <ScalarProperty Name="Event_Id" ColumnName="Event_Id" />
+                <ScalarProperty Name="Subscription_Id" ColumnName="Subscription_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

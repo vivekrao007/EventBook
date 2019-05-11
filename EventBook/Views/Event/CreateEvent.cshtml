@@ -1,0 +1,95 @@
+﻿@model EventBook.Models.EventsTable
+@{
+    ViewBag.Title = "Share Your Joy With Us";
+}
+<link href="~/Content/themes/base/all.css" rel="stylesheet" />
+<h2 style="font-family:'Comic Sans MS'">@ViewBag.Title</h2>
+@using (@Html.BeginForm("EventSucess", "Event"))
+{
+    <div class="row col-md-8">
+        <div class="form-group align-self-center">
+            <label class="control-label col-md-2">Event name</label>
+            <input class="form-control col-md-6" type="text" id="EventName" name="EventName"/>
+        </div>
+        <br />
+        <br />
+        <div class="form-group ">
+            <label class="control-label col-md-2">Event Poster</label>
+            <input class="form-control col-md-6" type="file" id="Poster" name="Poster" />
+        </div>
+
+        <br />
+        <br />
+        <div class="form-group align-self-center">
+            <label class="control-label col-md-2">Event Location</label>
+            <input class="form-control col-md-6" type="text" id="Location" name="Location" />
+        </div>
+
+        <br />
+        <br />
+        <div class="form-group align-self-center">
+            <label class="control-label col-md-2">Event Date</label>
+            <input class="form-control col-md-6" type="text" id="dateId" name="dateId" />
+        </div>
+
+        <br />
+        <br />
+        <div class="form-group align-self-center">
+            <label class="control-label col-md-2">Event Price</label>
+            <input class="form-control col-md-6" type="text" id="Price" name="Price" />
+        </div>
+
+        <br />
+        <br />
+        <div class="form-group align-self-center">
+            <label class="control-label col-md-2">Number Of Tickets</label>
+            <input class="form-control col-md-6" type="text" id="Tickets" name="Tickets" />
+        </div>
+
+        <br />
+        <br />
+        <div class="form-group ">
+            <label class="control-label col-md-2">Event Category</label>
+            <select class="form-control col-md-6" name="Category" id="Category">
+                <option value="Sports">Sports</option>
+                <option value="FoodDrink">FoodDrink</option>
+                <option value="Music">Music</option>
+                <option value="Comedy">Comedy</option>
+                <option value="Movies">Movies</option>
+            </select>
+        </div>
+
+        <br />
+        <br />
+        <div class="form-group align-self-center">
+            <label class="control-label col-md-2">Event Description</label>
+            <textarea class="form-control col-md-6" id="Desc" name="Desc" rows="3" cols="50"></textarea>
+        </div>
+
+        <br />
+        <br />
+        <br />
+        <br />
+        <div class="text-center col-lg-8 ">
+            <div class="form-group  col-2">
+                <input class="btn-primary" type="submit" value="Create" id="b1" name="b1" />
+            </div>
+        </div>
+    </div>
+    <hr />
+    <div id="sessionDivision" data-id="@Session["eventid"]"></div>
+}
+
+
+
+@section Scripts{
+    <script>
+    var name = '@Session["email_id"]';
+   
+    $('#sessionDivision').val(name);
+
+   // $('#sessionDivision').append($('#sessionDivision').val())
+    </script>
+    <script src="~/Scripts/CreateEvent.js"></script>
+
+}
